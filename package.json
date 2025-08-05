@@ -10,7 +10,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x dist/cli.js && npm link",
     "dev": "tsx src/consoleHelpers.ts",
     "cli": "tsx cli.ts",
     "test": "echo \"TODO: Aggiungi i test\" && exit 0",
