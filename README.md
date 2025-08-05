@@ -82,6 +82,7 @@ Per abilitare la scrittura su file nella directory `logs/`:
 
 ```env
 LOG_STORE=true
+LOG_DIR=test_log
 ```
 
 > Se `LOG_STORE=true`, ogni log sarà anche salvato in file `logs/YYYY-MM-DD.log`.

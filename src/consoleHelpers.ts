@@ -1,11 +1,14 @@
 // consoleHelpers.js
 import fs from 'fs';
 import path from 'path';
+import stripAnsi from 'strip-ansi';
+
 import { color, log, red, green, cyan, gray, cyanBright, whiteBright, white, whiteBG, bgWhite, bgYellowBright, bgCyanBright, blueBright, yellow, magenta } from 'console-log-colors';
 const ENABLE_LOG_STORE = process.env.LOG_STORE === 'true';
 
 /* ─────────────── CONFIGURAZIONE BASE ──────────────── */
-const LOG_DIR = path.resolve('logs'); // cartella log
+const LOG_DIR = path.resolve(process.env.LOG_DIR || 'logs'); // cartella log
+
 const DATE_FMT = new Intl.DateTimeFormat('it-IT', {
     year: 'numeric',
     month: '2-digit',
@@ -92,6 +95,7 @@ const getLogDateString = (): string => {
     const [day, month, year] = DATE_FMT.format(new Date()).split('/');
     return `${year}-${month}-${day}`;
 };
+
 /**
  * Scrive il log su file se abilitato da env.
  *
@@ -106,10 +110,11 @@ const writeLogToFile = (level: LogLevel, context: string, subMex: string, format
 
     const timestamp = getLogTimestamp();
     const logLine = `[${timestamp}] [${context}] ${level} ${subMex}:\n${typeof formattedMessage === 'string' ? formattedMessage : JSON.stringify(formattedMessage, null, 2)}\n${errorStack}\n`;
+    const cleanLog = stripAnsi(logLine); // 🔥 pulizia ansi solo qui
 
     const logFileName = path.join(LOG_DIR, `${getLogDateString()}.log`);
     try {
-        fs.appendFileSync(logFileName, logLine);
+        fs.appendFileSync(logFileName, cleanLog + '\n');
     } catch (err: unknown) {
         const e = toLoggable(err);
         console.warn(`[consoleHelpers] ❌ Errore scrittura log file: ${e instanceof Error ? e.message : String(e)}`);
