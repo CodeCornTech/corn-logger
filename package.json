@@ -13,6 +13,7 @@
     "lint": "npx tsc --noEmit",
     "cli": "npx tsx cli.ts",
     "prepare": "npm run build",
+    "test": "node dist/cli.js -c TEST -l info -m \"❗ Nessun test ancora definito!\"",
     "tree": "tree -I 'node_modules|dist|.git|.DS_Store|*.zip|_STASHED|logs' -a -L 5 > struttura_progetto.txt"
   },
   "repository": {
