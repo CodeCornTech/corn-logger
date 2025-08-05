@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 import { logInfo, logError, logWarn, logDebug } from './index.js'; // ⚠️ Usa path corretto se transpili in `dist/`
+const { version } = require('../package.json'); // ✅ prende la versione dinamicamente
 
-program.name('cornlog').description('🧠 Logger CLI CodeCorn - log colorato e opzionale su file').version('1.0.3').requiredOption('-c, --context <context>', 'Contesto del log (es: SYSTEM, DB, API)').requiredOption('-l, --level <level>', 'Livello log: info | warn | error | debug').requiredOption('-m, --message <message>', 'Messaggio da loggare').option('-s, --sub <subContext>', 'Sotto-contesto opzionale');
+program.name('cornlog').description('🧠 Logger CLI CodeCorn - log colorato e opzionale su file').version(version); // 🔁 dinamico
+
+program.requiredOption('-c, --context <context>', 'Contesto del log (es: SYSTEM, DB, API)').requiredOption('-l, --level <level>', 'Livello log: info | warn | error | debug').requiredOption('-m, --message <message>', 'Messaggio da loggare').option('-s, --sub <subContext>', 'Sotto-contesto opzionale');
 
 program.on('--help', () => {
     console.log('');
