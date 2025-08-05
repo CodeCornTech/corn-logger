@@ -1,6 +1,6 @@
 {
   "name": "@codecorn/corn-logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ANSI-friendly TypeScript logger with console-log-colors and optional file storage. Designed for Node.js apps and CLI tools.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
