@@ -9,3 +9,11 @@ __tests__/
 tsconfig.json
 .vscode/
 .DS_Store
+cli.ts
+index.ts
+struttura_progetto.txt
+tsconfig.json
+node_modules/
+.github/
+.gitignore
+_STASHED/

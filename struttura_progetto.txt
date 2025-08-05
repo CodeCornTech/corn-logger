@@ -1,0 +1,21 @@
+.
+├── .env
+├── .gitattributes
+├── .github
+│   └── workflows
+│       └── test.yml
+├── .gitignore
+├── .npmignore
+├── cli.ts
+├── index.ts
+├── LICENSE
+├── package.json
+├── README.md
+├── src
+│   └── consoleHelpers.ts
+├── struttura_progetto.txt
+├── tsconfig.json
+└── types
+    └── consoleHelpers.d.ts
+
+5 directories, 14 files

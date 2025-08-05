@@ -4,6 +4,8 @@
 > Colori, contesto, stack trace, log file, livelli e supporto a `.env`.
 > Basato su [`console-log-colors`](https://www.npmjs.com/package/console-log-colors) e ottimizzato per ambienti CLI/DevOps.
 
+[![@codecorn/corn-logger](https://img.shields.io/badge/CODECORN-CORNLOGGER-yellow?style=for-the-badge&logo=vercel)](https://www.npmjs.com/package/@codecorn/corn-logger)
+
 [![Downloads](https://img.shields.io/npm/dt/@codecorn/corn-logger?color=blue&label=npm%20downloads)](https://www.npmjs.com/package/@codecorn/corn-logger)
 [![npm version](https://img.shields.io/npm/v/@codecorn/corn-logger?color=brightgreen&logo=npm)](https://www.npmjs.com/package/@codecorn/corn-logger)
 [![GitHub stars](https://img.shields.io/github/stars/CodeCornTech/corn-logger?style=social)](https://github.com/CodeCornTech/corn-logger)
@@ -126,6 +128,7 @@ corn-logger/
 ├── src/               # Codice sorgente TS
 ├── types/             # Tipi definiti
 ├── index.ts           # Entry point
+├── index.ts           # Cli script
 ├── .env               # (opzionale)
 ├── .npmignore
 ├── package.json
@@ -138,11 +141,83 @@ corn-logger/
 
 ## 🛠 Integrazione CLI (facoltativa)
 
-Puoi usare il logger anche da terminale:
+Puoi usare il logger anche direttamente da terminale in diversi modi:
+
+### ✅ 1. Esecuzione diretta con `npx`
 
 ```bash
 npx cornlog --context "SYSTEM" --level info --message "Avvio completato"
 ```
+
+---
+
+### ✅ 2. Esecuzione tramite `npm run`
+
+Usa lo script definito nel tuo `package.json`:
+
+```bash
+npm run cli -- -c SYSTEM -l info -m "Avvio completato"
+```
+
+> Attenzione al doppio `--`: serve per passare argomenti al comando CLI.
+
+---
+
+### ✅ 3. Esecuzione via `npm link` (globale)
+
+Se hai eseguito:
+
+```bash
+npm run build
+npm link
+```
+
+Puoi usare direttamente il comando globale ovunque nel sistema:
+
+```bash
+cornlog -c SYSTEM -l info -m "Avvio completato"
+```
+
+---
+
+### 🎯 Altri esempi CLI
+
+```bash
+cornlog -c DB -l warn -m "Query lenta" -s "postgres"
+cornlog -c API -l error -m "Token non valido" -s "AuthMiddleware"
+cornlog -c JOB -l debug -m "Task schedulato" -s "cron-runner"
+cornlog -c INIT -l info -m "Configurazione caricata"
+```
+
+> I log verranno colorati e stampati a terminale. Se `LOG_STORE=true` nel tuo `.env`, verranno anche salvati in `logs/YYYY-MM-DD.log`.
+
+---
+
+## 📖 Guida rapida CLI (`--help`)
+
+Per vedere tutte le opzioni disponibili della CLI, puoi usare:
+
+```bash
+cornlog --help
+```
+
+Output:
+
+```txt
+Usage: cornlog [options]
+
+🧠 Logger CLI CodeCorn - log colorato e opzionale su file
+
+Options:
+  -c, --context <context>     Contesto del log (es: SYSTEM, DB, API) [obbligatorio]
+  -l, --level <level>         Livello log: info | warn | error | debug [obbligatorio]
+  -m, --message <message>     Messaggio da loggare [obbligatorio]
+  -s, --sub <subContext>      Sotto-contesto opzionale
+  -V, --version               Mostra versione
+  -h, --help                  Mostra questo aiuto
+```
+
+> ⚠️ Tutte le opzioni marcate come _obbligatorie_ devono essere specificate, altrimenti la CLI restituirà un errore.
 
 ---
 
