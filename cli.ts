@@ -1,24 +1,32 @@
-#!/usr/bin/env tsx
-import { logInfo, logError, logDebug, logWarn } from './src/consoleHelpers';
-import * as dotenv from 'dotenv';
-dotenv.config();
+#!/usr/bin/env node
+import { logInfo, logError, logWarn, logDebug } from './index'; // ⚠️ Usa path corretto se transpili in `dist/`
+import { program } from 'commander';
 
-const args = process.argv.slice(2);
+program.name('cornlog').description('🧠 Logger CLI CodeCorn - log colorato e opzionale su file').version('1.0.2');
 
-if (args.length < 1) {
-  logWarn('CLI', 'Nessun argomento fornito', 'Usage: cli.ts --message "Ciao mondo"');
-  process.exit(1);
-}
+program.requiredOption('-c, --context <context>', 'Contesto del log (es: SYSTEM, DB, API)').requiredOption('-l, --level <level>', 'Livello log: info | warn | error | debug').requiredOption('-m, --message <message>', 'Messaggio da loggare').option('-s, --sub <subContext>', 'Sotto-contesto opzionale').parse();
 
-const msgArg = args.find((a) => a.startsWith('--message'));
-const msg = msgArg ? msgArg.split('=')[1] || 'Messaggio non specificato' : 'Messaggio mancante';
+const opts = program.opts();
 
-logInfo('CLI', msg, 'Avvio');
+const ctx = opts.context;
+const lvl = opts.level.toLowerCase();
+const msg = opts.message;
+const sub = opts.sub || null;
 
-try {
-  // Simula operazione
-  if (msg === 'fail') throw new Error('Simulazione fallimento');
-  logDebug('CLI', { success: true, msg }, 'Operazione completata');
-} catch (e) {
-  logError('CLI', e, 'Errore generato');
+switch (lvl) {
+    case 'info':
+        logInfo(ctx, msg, sub);
+        break;
+    case 'warn':
+        logWarn(ctx, msg, sub);
+        break;
+    case 'error':
+        logError(ctx, new Error(msg), sub);
+        break;
+    case 'debug':
+        logDebug(ctx, msg, sub);
+        break;
+    default:
+        console.error(`❌ Livello non valido: ${lvl}`);
+        process.exit(1);
 }

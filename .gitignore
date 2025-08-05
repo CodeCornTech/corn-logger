@@ -143,3 +143,6 @@ logs/
 .DS_Store
 .idea/
 .vscode/
+
+_STASHED/
+/_STASHED
