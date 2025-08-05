@@ -1,0 +1,11 @@
+src/
+types/
+*.ts
+*.map
+*.env
+logs/
+test/
+__tests__/
+tsconfig.json
+.vscode/
+.DS_Store

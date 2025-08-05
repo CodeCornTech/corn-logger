@@ -1,0 +1,55 @@
+{
+  "name": "@codecorn/corn-logger",
+  "version": "1.0.0",
+  "description": "ANSI-friendly TypeScript logger with console-log-colors and optional file storage. Designed for Node.js apps and CLI tools.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/consoleHelpers.ts",
+    "cli": "tsx cli.ts",
+    "test": "echo \"TODO: Aggiungi i test\" && exit 0",
+    "prepare": "npm run build"
+  },
+  "bin": {
+    "cornlog": "dist/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeCornTech/corn-logger.git"
+  },
+  "keywords": [
+    "logger",
+    "typescript",
+    "console-log-colors",
+    "chalk",
+    "cli",
+    "log",
+    "color",
+    "file",
+    "ansi",
+    "debug",
+    "codecorn"
+  ],
+  "author": "Federico Girolami <f.girolami@codecorn.it>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeCornTech/corn-logger/issues"
+  },
+  "homepage": "https://github.com/CodeCornTech/corn-logger#readme",
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2",
+    "ts-node": "^10.9.1",
+    "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "console-log-colors": "^0.5.0",
+    "dotenv": "^17.2.1"
+  }
+}
