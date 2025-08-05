@@ -1,12 +1,15 @@
-# 🧠 @codecorn/corn-logger
+# 🌽 @codecorn/corn-logger
 
-> Logger stiloso, potente e ANSI-friendly per Node.js e TypeScript.  
+> 🧠 Logger TypeScript avanzato per Node.js con supporto a colori, salvataggio su file, sub-contesto e livello log.  
 > Colori, contesto, stack trace, log file, livelli e supporto a `.env`.
+> Basato su [`console-log-colors`](https://www.npmjs.com/package/console-log-colors) e ottimizzato per ambienti CLI/DevOps.
 
-[![npm version](https://img.shields.io/npm/v/@codecorn/corn-logger.svg?style=flat-square)](https://www.npmjs.com/package/@codecorn/corn-logger)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
-[![CodeCorn™](https://img.shields.io/badge/powered%20by-CodeCorn™-ff69b4?style=flat-square)](https://codecorn.it)
+[![Downloads](https://img.shields.io/npm/dt/@codecorn/corn-logger?color=blue&label=npm%20downloads)](https://www.npmjs.com/package/@codecorn/corn-logger)
+[![npm version](https://img.shields.io/npm/v/@codecorn/corn-logger?color=brightgreen&logo=npm)](https://www.npmjs.com/package/@codecorn/corn-logger)
+[![GitHub stars](https://img.shields.io/github/stars/CodeCornTech/corn-logger?style=social)](https://github.com/CodeCornTech/corn-logger)
+[![GitHub issues](https://img.shields.io/github/issues/CodeCornTech/corn-logger?color=blue)](https://github.com/CodeCornTech/corn-logger/issues)
 [![Tests](https://github.com/CodeCornTech/corn-logger/actions/workflows/test.yml/badge.svg)](https://github.com/CodeCornTech/corn-logger/actions/workflows/test.yml)
+[![MIT License](https://img.shields.io/github/license/CodeCornTech/corn-logger)](LICENSE)
 
 ---
 
@@ -14,6 +17,12 @@
 
 ```bash
 npm install @codecorn/corn-logger
+```
+
+oppure con yarn:
+
+```bash
+yarn add @codecorn/corn-logger
 ```
 
 > ⚠️ Il logger legge automaticamente variabili da `.env` se presenti (`dotenv.config()` è incluso).
@@ -38,9 +47,13 @@ npm install @codecorn/corn-logger
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { logInfo, logError, logWarn, logDebug } from '@codecorn/corn-logger';
+import { logInfo, logError, logWarn, logDebug, logMessage } from '@codecorn/corn-logger';
 
-logInfo('BOOT', 'Logger pronto 🚀');
+logMessage('DEBUG', 'BOOT', 'Logger pronto 🚀');
+logInfo('MAIN', 'Tutto ok');
+logWarn('INIT', { warning: 'config mancante' });
+logError('DB', new Error('Connessione fallita'), 'DBConnect');
+logDebug('SERVICE', { id: 123, state: 'running' }, 'JobRunner');
 ```
 
 ---
@@ -61,13 +74,47 @@ logDebug('AUTH', { user: 'admin', role: 'superuser' }, 'SessionPayload');
 
 ---
 
-## ⚙️ Variabili `.env`
+## ⚙️ Variabili `.env` e 📦 Logger su File
+
+Per abilitare la scrittura su file nella directory `logs/`:
 
 ```env
 LOG_STORE=true
 ```
 
 > Se `LOG_STORE=true`, ogni log sarà anche salvato in file `logs/YYYY-MM-DD.log`.
+
+Output nel formato:
+
+```
+[2025-08-05 14:33:05] [SERVICE] DEBUG > JobRunner:
+{ id: 123, state: 'running' }
+```
+
+---
+
+## ✨ Features
+
+-   ✅ Colorazione ANSI per ogni livello log
+-   ✅ Sub-context support (`logError(context, err, subContext)`)
+-   ✅ Supporto a `Error`, `object`, `string`, `null`, `undefined`
+-   ✅ Salvataggio su file con timestamp (`LOG_STORE=true`)
+-   ✅ Estendibile e minimalista
+
+---
+
+## 🔧 Scripts utili
+
+Nel tuo `package.json`:
+
+```json
+"scripts": {
+  "build": "tsc",
+  "dev": "tsc --watch",
+  "lint": "tsc --noEmit",
+  "prepare": "npm run build"
+}
+```
 
 ---
 
@@ -85,6 +132,25 @@ corn-logger/
 ├── README.md
 ├── LICENSE
 └── tsconfig.json
+```
+
+---
+
+## 🛠 Integrazione CLI (facoltativa)
+
+Puoi usare il logger anche da terminale:
+
+```bash
+npx cornlog --context "SYSTEM" --level info --message "Avvio completato"
+```
+
+---
+
+## 🧪 Test
+
+```bash
+npm run lint
+npm test
 ```
 
 ---
@@ -116,4 +182,12 @@ corn-logger/
 
 MIT © [CodeCorn™](https://codecorn.it)
 
+Distribuito sotto licenza [MIT](LICENSE).
+
 ---
+
+### 🤝 Contribuisci
+
+Pull request benvenute. Per grosse modifiche apri una issue prima di iniziare.
+
+> Powered by CodeCorn™ 🚀
