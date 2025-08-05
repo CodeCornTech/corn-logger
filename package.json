@@ -8,9 +8,9 @@
     "cornlog": "dist/cli.js"
   },
   "scripts": {
-    "build": "tsc && chmod +x dist/cli.js && npm link",
-    "dev": "tsc --watch",
-    "lint": "tsc --noEmit",
+    "build": "npx tsc && chmod +x dist/cli.js",
+    "dev": "npx tsc --watch",
+    "lint": "npx tsc --noEmit",
     "cli": "npx tsx cli.ts",
     "prepare": "npm run build",
     "tree": "tree -I 'node_modules|dist|.git|.DS_Store|*.zip|_STASHED|logs' -a -L 5 > struttura_progetto.txt"
